@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 
-namespace Aimrank.CSGO.Application.Server.Commands.FinishMatch
+namespace Aimrank.CSGO.Application.Server.FinishMatch
 {
     internal class FinishMatchCommandHandler : ICommandHandler<FinishMatchCommand>
     {

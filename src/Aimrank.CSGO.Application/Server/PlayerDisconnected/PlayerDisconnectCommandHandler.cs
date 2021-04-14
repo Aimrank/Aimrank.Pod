@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 
-namespace Aimrank.CSGO.Application.Server.Commands.PlayerDisconnected
+namespace Aimrank.CSGO.Application.Server.PlayerDisconnected
 {
     internal class PlayerDisconnectCommandHandler : ICommandHandler<PlayerDisconnectCommand>
     {

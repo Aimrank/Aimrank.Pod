@@ -2,7 +2,7 @@ using Aimrank.CSGO.Application.Contracts;
 using System.Collections.Generic;
 using System;
 
-namespace Aimrank.CSGO.Application.Server.Commands.FinishMatch
+namespace Aimrank.CSGO.Application.Server.FinishMatch
 {
     public class FinishMatchCommand : ICommand
     {

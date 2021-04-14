@@ -1,15 +1,11 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System;
 
 namespace Aimrank.CSGO.Application.Server
 {
     public interface IServerProcessManager
     {
-        bool TryCreateReservation(Guid matchId);
-        void DeleteReservation(Guid matchId);
-        string StartServer(Guid matchId, string map, IEnumerable<string> whitelist);
+        string StartServer(Guid matchId, string steamToken, string map, IEnumerable<string> whitelist);
         void StopServer(Guid matchId);
-        Task ExecuteCommandAsync(Guid matchId, string command);
     }
 }

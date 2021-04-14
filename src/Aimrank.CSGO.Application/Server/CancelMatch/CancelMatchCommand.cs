@@ -1,7 +1,7 @@
 ﻿using Aimrank.CSGO.Application.Contracts;
 using System;
 
-namespace Aimrank.CSGO.Application.Server.Commands.CancelMatch
+namespace Aimrank.CSGO.Application.Server.CancelMatch
 {
     public class CancelMatchCommand : ICommand
     {

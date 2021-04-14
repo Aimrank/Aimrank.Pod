@@ -42,8 +42,6 @@ namespace Aimrank.CSGO.Infrastructure.Application.Server
             IsRunning = true;
         }
 
-        public Task ExecuteAsync(string command) => ExecuteScreenCommandAsync(@$"eval 'stuff \""{command}\""\015'");
-
         public async Task StopAsync()
         {
             if (IsRunning)

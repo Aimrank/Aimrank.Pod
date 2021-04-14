@@ -1,7 +1,7 @@
 ﻿using Aimrank.CSGO.Application.Contracts;
 using System;
 
-namespace Aimrank.CSGO.Application.Server.Commands.PlayerDisconnected
+namespace Aimrank.CSGO.Application.Server.PlayerDisconnected
 {
     public class PlayerDisconnectCommand : ICommand
     {

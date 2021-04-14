@@ -1,8 +1,8 @@
 using Aimrank.CSGO.Application.Contracts;
-using Aimrank.CSGO.Application.Server.Commands.CancelMatch;
-using Aimrank.CSGO.Application.Server.Commands.FinishMatch;
-using Aimrank.CSGO.Application.Server.Commands.PlayerDisconnected;
-using Aimrank.CSGO.Application.Server.Commands.StartMatch;
+using Aimrank.CSGO.Application.Server.CancelMatch;
+using Aimrank.CSGO.Application.Server.FinishMatch;
+using Aimrank.CSGO.Application.Server.PlayerDisconnected;
+using Aimrank.CSGO.Application.Server.StartMatch;
 using Aimrank.CSGO.Application.Server;
 using System.Collections.Generic;
 using System.Text.Json;

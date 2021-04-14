@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 
-namespace Aimrank.CSGO.Application.Server.Commands.StartMatch
+namespace Aimrank.CSGO.Application.Server.StartMatch
 {
     internal class StartMatchCommandHandler : ICommandHandler<StartMatchCommand>
     {

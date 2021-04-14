@@ -1,7 +1,7 @@
 using Aimrank.CSGO.Application.Contracts;
 using System;
 
-namespace Aimrank.CSGO.Application.Server.Commands.StartMatch
+namespace Aimrank.CSGO.Application.Server.StartMatch
 {
     public class StartMatchCommand : ICommand
     {

@@ -1,11 +1,8 @@
 using Aimrank.CSGO.Application.Server;
-using Aimrank.CSGO.Infrastructure.Configuration.Server;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System;
-using Aimrank.CSGO.Infrastructure.Application.Server.Exceptions;
 
 namespace Aimrank.CSGO.Infrastructure.Application.Server
 {
@@ -17,73 +14,28 @@ namespace Aimrank.CSGO.Infrastructure.Application.Server
         
         private readonly ConcurrentDictionary<Guid, ServerConfiguration> _processes = new();
         
-        private readonly ConcurrentDictionary<Guid, ServerReservation> _reservations = new();
-        
-        private readonly CSGOSettings _csgoSettings;
-        
-        public FakeServerProcessManager(CSGOSettings csgoSettings)
+        public FakeServerProcessManager()
         {
-            _csgoSettings = csgoSettings;
             _availablePorts.Enqueue(27016);
             _availablePorts.Enqueue(27017);
             _availablePorts.Enqueue(27018);
             _availablePorts.Enqueue(27019);
         }
-
-        public bool TryCreateReservation(Guid matchId)
+        
+        public string StartServer(Guid matchId, string steamToken, string map, IEnumerable<string> whitelist)
         {
             lock (_locker)
             {
-                if (_processes.ContainsKey(matchId))
-                {
-                    return false;
-                }
-
                 if (!_availablePorts.TryDequeue(out var port))
                 {
-                    return false;
+                    throw new ServerException($"Failed to start CS:GO server for match with ID \"{matchId}\"");
                 }
+                
+                var configuration = new ServerConfiguration(steamToken, port, whitelist.ToList(), map);
 
-                var steamKey = GetUnusedSteamKey();
+                _processes.TryAdd(matchId, configuration);
 
-                var reservation = new ServerReservation(matchId, steamKey, port);
-
-                _reservations.TryAdd(reservation.MatchId, reservation);
-
-                return true;
-            }
-        }
-
-        public void DeleteReservation(Guid matchId)
-        {
-            lock (_locker)
-            {
-                if (_reservations.TryRemove(matchId, out var reservation))
-                {
-                    _availablePorts.Enqueue(reservation.Port);
-                }
-            }
-        }
-
-        public string StartServer(Guid matchId, string map, IEnumerable<string> whitelist)
-        {
-            lock (_locker)
-            {
-                if (_reservations.TryRemove(matchId, out var reservation))
-                {
-                    var configuration = new ServerConfiguration(
-                        reservation.SteamKey,
-                        reservation.Port,
-                        whitelist.ToList(),
-                        map);
-
-                    if (_processes.TryAdd(reservation.MatchId, configuration))
-                    {
-                        return "localhost";
-                    }
-                }
-
-                throw new ServerProcessStartException();
+                return "localhost";
             }
         }
 
@@ -96,23 +48,6 @@ namespace Aimrank.CSGO.Infrastructure.Application.Server
                     _availablePorts.Enqueue(process.Port);
                 }
             }
-        }
-
-        public Task ExecuteCommandAsync(Guid matchId, string command) => Task.CompletedTask;
-        
-        private string GetUnusedSteamKey()
-        {
-            var steamKey =
-                _csgoSettings.SteamKeys.FirstOrDefault(k =>
-                    _processes.Values.All(p => p.SteamKey != k) &&
-                    _reservations.Values.All(r => r.SteamKey != k));
-
-            if (steamKey is null)
-            {
-                throw new ServerReservationException();
-            }
-
-            return steamKey;
         }
     }
 }
