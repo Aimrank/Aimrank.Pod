@@ -6,15 +6,15 @@ WORKDIR /app
 ENV ASPNETCORE_ENVIRONMENT=Production
 
 COPY *.sln .
-COPY src/Aimrank.CSGO.Api/*.csproj ./src/Aimrank.CSGO.Api/
-COPY src/Aimrank.CSGO.Application/*.csproj ./src/Aimrank.CSGO.Application/
-COPY src/Aimrank.CSGO.Infrastructure/*.csproj ./src/Aimrank.CSGO.Infrastructure/
+COPY src/Aimrank.Pod.Api/*.csproj ./src/Aimrank.Pod.Api/
+COPY src/Aimrank.Pod.Application/*.csproj ./src/Aimrank.Pod.Application/
+COPY src/Aimrank.Pod.Infrastructure/*.csproj ./src/Aimrank.Pod.Infrastructure/
 
 RUN dotnet restore
 
-COPY src/Aimrank.CSGO.Api/. ./src/Aimrank.CSGO.Api/
-COPY src/Aimrank.CSGO.Application/. ./src/Aimrank.CSGO.Application/
-COPY src/Aimrank.CSGO.Infrastructure/. ./src/Aimrank.CSGO.Infrastructure/
+COPY src/Aimrank.Pod.Api/. ./src/Aimrank.Pod.Api/
+COPY src/Aimrank.Pod.Application/. ./src/Aimrank.Pod.Application/
+COPY src/Aimrank.Pod.Infrastructure/. ./src/Aimrank.Pod.Infrastructure/
 
 RUN dotnet publish -c Release -o /app/out
 
@@ -88,4 +88,4 @@ EXPOSE 27016-27019/tcp
 HEALTHCHECK --interval=30s --timeout=30s --start-period=30s --retries=5 \
   CMD curl -f http://localhost/ || exit 1
   
-ENTRYPOINT ["dotnet", "Aimrank.CSGO.Api.dll"]
+ENTRYPOINT ["dotnet", "Aimrank.Pod.Api.dll"]
