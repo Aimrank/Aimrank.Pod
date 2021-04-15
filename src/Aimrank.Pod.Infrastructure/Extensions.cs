@@ -16,9 +16,8 @@ namespace Aimrank.Pod.Infrastructure
             
             services.AddSingleton<IServerEventMapper, ServerEventMapper>();
             services.AddSingleton<IIntegrationEventDispatcher, IntegrationEventDispatcher>();
-            
-            var serverSettings = new ServerSettings();
-            configuration.GetSection(nameof(ServerSettings)).Bind(serverSettings);
+
+            var serverSettings = configuration.GetSection(nameof(ServerSettings)).Get<ServerSettings>();
 
             if (serverSettings.UseFakeServerProcessManager)
             {
