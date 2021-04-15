@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Aimrank.CSGO.Api.Controllers
 {
     [ApiController]
-    [Route("csgo")]
+    [Route("[controller]")]
     public class CSGOController : ControllerBase
     {
         private readonly IMediator _mediator;

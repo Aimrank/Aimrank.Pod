@@ -1,18 +1,31 @@
 ﻿using Aimrank.CSGO.Application.Contracts;
+using Aimrank.CSGO.Application.Events;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
-using System;
 
 namespace Aimrank.CSGO.Application.Server.CancelMatch
 {
     internal class CancelMatchCommandHandler : ICommandHandler<CancelMatchCommand>
     {
-        public Task<Unit> Handle(CancelMatchCommand request, CancellationToken cancellationToken)
+        private readonly IIntegrationEventDispatcher _dispatcher;
+        private readonly IServerProcessManager _serverProcessManager;
+
+        public CancelMatchCommandHandler(
+            IIntegrationEventDispatcher dispatcher,
+            IServerProcessManager serverProcessManager)
         {
-            Console.WriteLine("Stop cs go server and free resources");
+            _dispatcher = dispatcher;
+            _serverProcessManager = serverProcessManager;
+        }
+
+        public async Task<Unit> Handle(CancelMatchCommand request, CancellationToken cancellationToken)
+        {
+            _serverProcessManager.StopServer(request.MatchId);
             
-            return Task.FromResult(Unit.Value);
+            await _dispatcher.DispatchAsync(new MatchCanceledIntegrationEvent(request.MatchId), cancellationToken);
+            
+            return Unit.Value;
         }
     }
 }

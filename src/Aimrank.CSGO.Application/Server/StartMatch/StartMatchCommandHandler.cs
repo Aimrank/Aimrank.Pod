@@ -1,18 +1,25 @@
 using Aimrank.CSGO.Application.Contracts;
+using Aimrank.CSGO.Application.Events;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
-using System;
 
 namespace Aimrank.CSGO.Application.Server.StartMatch
 {
     internal class StartMatchCommandHandler : ICommandHandler<StartMatchCommand>
     {
-        public Task<Unit> Handle(StartMatchCommand request, CancellationToken cancellationToken)
-        {
-            Console.WriteLine("Start cs go server");
+        private readonly IIntegrationEventDispatcher _dispatcher;
 
-            return Task.FromResult(Unit.Value);
+        public StartMatchCommandHandler(IIntegrationEventDispatcher dispatcher)
+        {
+            _dispatcher = dispatcher;
+        }
+
+        public async Task<Unit> Handle(StartMatchCommand request, CancellationToken cancellationToken)
+        {
+            await _dispatcher.DispatchAsync(new MatchStartedIntegrationEvent(request.MatchId), cancellationToken);
+            
+            return Unit.Value;
         }
     }
 }

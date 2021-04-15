@@ -8,7 +8,7 @@ using System;
 namespace Aimrank.CSGO.Api.Controllers
 {
     [ApiController]
-    [Route("server")]
+    [Route("[controller]")]
     public class ServerController : ControllerBase
     {
         private readonly IMediator _mediator;

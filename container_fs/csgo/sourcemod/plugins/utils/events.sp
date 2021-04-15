@@ -12,7 +12,7 @@ public void PublishEvent(JSON_Object data)
     data.SetString("matchId", serverId);
     data.Encode(event, sizeof(event));
     
-    System2HTTPRequest httpRequest = new System2HTTPRequest(HttpResponseCallback, "http://localhost/api/server");
+    System2HTTPRequest httpRequest = new System2HTTPRequest(HttpResponseCallback, "http://localhost/csgo");
     httpRequest.SetHeader("Content-Type", "application/json");
     httpRequest.SetData(event);
     httpRequest.POST();
