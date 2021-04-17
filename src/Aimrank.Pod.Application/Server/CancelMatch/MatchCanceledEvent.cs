@@ -3,11 +3,11 @@ using System;
 
 namespace Aimrank.Pod.Application.Server.CancelMatch
 {
-    public class MatchCanceledIntegrationEvent : IIntegrationEvent
+    public class MatchCanceledEvent : IEvent
     {
         public Guid MatchId { get; }
 
-        public MatchCanceledIntegrationEvent(Guid matchId)
+        public MatchCanceledEvent(Guid matchId)
         {
             MatchId = matchId;
         }

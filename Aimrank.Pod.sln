@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aimrank.Pod.Application", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aimrank.Pod.Infrastructure", "src\Aimrank.Pod.Infrastructure\Aimrank.Pod.Infrastructure.csproj", "{D58E76B3-6CE2-42FA-9BA6-9E50E98A894F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5465DED0-899C-4D74-95CB-CCAFB897C525}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aimrank.Pod.UnitTests", "tests\Aimrank.Pod.UnitTests\Aimrank.Pod.UnitTests.csproj", "{58EC8F87-0E14-49E4-9EB3-5F0FCC9AD4A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,12 @@ Global
 		{D58E76B3-6CE2-42FA-9BA6-9E50E98A894F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D58E76B3-6CE2-42FA-9BA6-9E50E98A894F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D58E76B3-6CE2-42FA-9BA6-9E50E98A894F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58EC8F87-0E14-49E4-9EB3-5F0FCC9AD4A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58EC8F87-0E14-49E4-9EB3-5F0FCC9AD4A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58EC8F87-0E14-49E4-9EB3-5F0FCC9AD4A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58EC8F87-0E14-49E4-9EB3-5F0FCC9AD4A6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{58EC8F87-0E14-49E4-9EB3-5F0FCC9AD4A6} = {5465DED0-899C-4D74-95CB-CCAFB897C525}
 	EndGlobalSection
 EndGlobal

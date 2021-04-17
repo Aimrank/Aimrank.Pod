@@ -9,14 +9,14 @@ using System;
 
 namespace Aimrank.Pod.Infrastructure.Application.Events
 {
-    internal class IntegrationEventDispatcher : IIntegrationEventDispatcher, IDisposable
+    internal class EventDispatcher : IEventDispatcher, IDisposable
     {
         private readonly RabbitMQSettings _rabbitSettings;
         private readonly IBasicProperties _basicProperties;
         private readonly IConnection _connection;
         private readonly IModel _channel;
 
-        public IntegrationEventDispatcher(IOptions<RabbitMQSettings> rabbitSettings)
+        public EventDispatcher(IOptions<RabbitMQSettings> rabbitSettings)
         {
             _rabbitSettings = rabbitSettings.Value;
 
@@ -36,7 +36,7 @@ namespace Aimrank.Pod.Infrastructure.Application.Events
             _basicProperties.Persistent = true;
         }
 
-        public Task DispatchAsync(IIntegrationEvent @event, CancellationToken cancellationToken = default)
+        public Task DispatchAsync(IEvent @event, CancellationToken cancellationToken = default)
         {
             _channel.BasicPublish(_rabbitSettings.ExchangeName, GetRoutingKey(@event), _basicProperties, GetEventBody(@event));
             return Task.CompletedTask;
@@ -48,9 +48,9 @@ namespace Aimrank.Pod.Infrastructure.Application.Events
             _connection?.Dispose();
         }
 
-        private string GetRoutingKey(IIntegrationEvent @event) => $"{_rabbitSettings.ServiceName}.{@event.GetType().Name}";
+        private string GetRoutingKey(IEvent @event) => $"{_rabbitSettings.ServiceName}.{@event.GetType().Name}";
 
-        private byte[] GetEventBody(IIntegrationEvent @event)
+        private byte[] GetEventBody(IEvent @event)
         {
             var text = JsonSerializer.Serialize(@event, @event.GetType());
             return Encoding.UTF8.GetBytes(text);

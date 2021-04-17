@@ -3,12 +3,12 @@ using System;
 
 namespace Aimrank.Pod.Application.Server.PlayerDisconnected
 {
-    public class PlayerDisconnectedIntegrationEvent : IIntegrationEvent
+    public class PlayerDisconnectedEvent : IEvent
     {
         public Guid MatchId { get; }
         public string SteamId { get; }
 
-        public PlayerDisconnectedIntegrationEvent(Guid matchId, string steamId)
+        public PlayerDisconnectedEvent(Guid matchId, string steamId)
         {
             MatchId = matchId;
             SteamId = steamId;

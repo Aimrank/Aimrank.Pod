@@ -8,11 +8,11 @@ namespace Aimrank.Pod.Application.Server.CancelMatch
 {
     internal class CancelMatchCommandHandler : ICommandHandler<CancelMatchCommand>
     {
-        private readonly IIntegrationEventDispatcher _dispatcher;
+        private readonly IEventDispatcher _dispatcher;
         private readonly IServerProcessManager _serverProcessManager;
 
         public CancelMatchCommandHandler(
-            IIntegrationEventDispatcher dispatcher,
+            IEventDispatcher dispatcher,
             IServerProcessManager serverProcessManager)
         {
             _dispatcher = dispatcher;
@@ -23,7 +23,7 @@ namespace Aimrank.Pod.Application.Server.CancelMatch
         {
             _serverProcessManager.StopServer(request.MatchId);
             
-            await _dispatcher.DispatchAsync(new MatchCanceledIntegrationEvent(request.MatchId), cancellationToken);
+            await _dispatcher.DispatchAsync(new MatchCanceledEvent(request.MatchId), cancellationToken);
             
             return Unit.Value;
         }

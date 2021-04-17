@@ -8,16 +8,16 @@ namespace Aimrank.Pod.Application.Server.StartMatch
 {
     internal class StartMatchCommandHandler : ICommandHandler<StartMatchCommand>
     {
-        private readonly IIntegrationEventDispatcher _dispatcher;
+        private readonly IEventDispatcher _dispatcher;
 
-        public StartMatchCommandHandler(IIntegrationEventDispatcher dispatcher)
+        public StartMatchCommandHandler(IEventDispatcher dispatcher)
         {
             _dispatcher = dispatcher;
         }
 
         public async Task<Unit> Handle(StartMatchCommand request, CancellationToken cancellationToken)
         {
-            await _dispatcher.DispatchAsync(new MatchStartedIntegrationEvent(request.MatchId), cancellationToken);
+            await _dispatcher.DispatchAsync(new MatchStartedEvent(request.MatchId), cancellationToken);
             
             return Unit.Value;
         }

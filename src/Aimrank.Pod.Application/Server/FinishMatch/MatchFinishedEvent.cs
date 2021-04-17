@@ -3,14 +3,14 @@ using System;
 
 namespace Aimrank.Pod.Application.Server.FinishMatch
 {
-    public class MatchFinishedIntegrationEvent : IIntegrationEvent
+    public class MatchFinishedEvent : IEvent
     {
         public Guid MatchId { get; }
         public int Winner { get; }
         public FinishMatchCommand.MatchEndEventTeam TeamTerrorists { get; }
         public FinishMatchCommand.MatchEndEventTeam TeamCounterTerrorists { get; }
 
-        public MatchFinishedIntegrationEvent(
+        public MatchFinishedEvent(
             Guid matchId,
             int winner, 
             FinishMatchCommand.MatchEndEventTeam teamTerrorists,

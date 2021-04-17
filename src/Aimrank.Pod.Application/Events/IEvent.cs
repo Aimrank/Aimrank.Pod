@@ -1,6 +1,6 @@
 namespace Aimrank.Pod.Application.Events
 {
-    public interface IIntegrationEvent
+    public interface IEvent
     {
     }
 }

@@ -8,11 +8,11 @@ namespace Aimrank.Pod.Application.Server.FinishMatch
 {
     internal class FinishMatchCommandHandler : ICommandHandler<FinishMatchCommand>
     {
-        private readonly IIntegrationEventDispatcher _dispatcher;
+        private readonly IEventDispatcher _dispatcher;
         private readonly IServerProcessManager _serverProcessManager;
 
         public FinishMatchCommandHandler(
-            IIntegrationEventDispatcher dispatcher,
+            IEventDispatcher dispatcher,
             IServerProcessManager serverProcessManager)
         {
             _dispatcher = dispatcher;
@@ -23,7 +23,7 @@ namespace Aimrank.Pod.Application.Server.FinishMatch
         {
             _serverProcessManager.StopServer(request.MatchId);
 
-            await _dispatcher.DispatchAsync(new MatchFinishedIntegrationEvent(
+            await _dispatcher.DispatchAsync(new MatchFinishedEvent(
                 request.MatchId,
                 request.Winner,
                 request.TeamTerrorists,
