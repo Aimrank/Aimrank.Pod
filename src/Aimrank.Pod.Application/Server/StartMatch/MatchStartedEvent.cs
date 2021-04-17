@@ -3,7 +3,7 @@ using System;
 
 namespace Aimrank.Pod.Application.Server.StartMatch
 {
-    public class MatchStartedEvent : IEvent
+    public class MatchStartedEvent : EventBase
     {
         public Guid MatchId { get; }
 

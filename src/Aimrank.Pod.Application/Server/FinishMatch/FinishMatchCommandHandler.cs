@@ -19,17 +19,17 @@ namespace Aimrank.Pod.Application.Server.FinishMatch
             _serverProcessManager = serverProcessManager;
         }
 
-        public async Task<Unit> Handle(FinishMatchCommand request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(FinishMatchCommand request, CancellationToken cancellationToken)
         {
             _serverProcessManager.StopServer(request.MatchId);
 
-            await _dispatcher.DispatchAsync(new MatchFinishedEvent(
+            _dispatcher.Dispatch(new MatchFinishedEvent(
                 request.MatchId,
                 request.Winner,
                 request.TeamTerrorists,
-                request.TeamCounterTerrorists), cancellationToken);
-            
-            return Unit.Value;
+                request.TeamCounterTerrorists));
+
+            return Task.FromResult(Unit.Value);
         }
     }
 }

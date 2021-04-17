@@ -3,7 +3,7 @@ using System;
 
 namespace Aimrank.Pod.Application.Server.PlayerDisconnected
 {
-    public class PlayerDisconnectedEvent : IEvent
+    public class PlayerDisconnectedEvent : EventBase
     {
         public Guid MatchId { get; }
         public string SteamId { get; }

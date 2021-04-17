@@ -15,12 +15,11 @@ namespace Aimrank.Pod.Application.Server.PlayerDisconnected
             _dispatcher = dispatcher;
         }
 
-        public async Task<Unit> Handle(PlayerDisconnectCommand request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(PlayerDisconnectCommand request, CancellationToken cancellationToken)
         {
-            await _dispatcher.DispatchAsync(new PlayerDisconnectedEvent(
-                request.MatchId, request.SteamId), cancellationToken);
+            _dispatcher.Dispatch(new PlayerDisconnectedEvent(request.MatchId, request.SteamId));
             
-            return Unit.Value;
+            return Task.FromResult(Unit.Value);
         }
     }
 }

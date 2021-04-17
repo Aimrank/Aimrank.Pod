@@ -15,11 +15,11 @@ namespace Aimrank.Pod.Application.Server.StartMatch
             _dispatcher = dispatcher;
         }
 
-        public async Task<Unit> Handle(StartMatchCommand request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(StartMatchCommand request, CancellationToken cancellationToken)
         {
-            await _dispatcher.DispatchAsync(new MatchStartedEvent(request.MatchId), cancellationToken);
+            _dispatcher.Dispatch(new MatchStartedEvent(request.MatchId));
             
-            return Unit.Value;
+            return Task.FromResult(Unit.Value);
         }
     }
 }

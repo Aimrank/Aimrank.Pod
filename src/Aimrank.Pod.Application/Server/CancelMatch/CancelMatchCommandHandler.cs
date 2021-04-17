@@ -19,13 +19,13 @@ namespace Aimrank.Pod.Application.Server.CancelMatch
             _serverProcessManager = serverProcessManager;
         }
 
-        public async Task<Unit> Handle(CancelMatchCommand request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(CancelMatchCommand request, CancellationToken cancellationToken)
         {
             _serverProcessManager.StopServer(request.MatchId);
             
-            await _dispatcher.DispatchAsync(new MatchCanceledEvent(request.MatchId), cancellationToken);
-            
-            return Unit.Value;
+            _dispatcher.Dispatch(new MatchCanceledEvent(request.MatchId));
+
+            return Task.FromResult(Unit.Value);
         }
     }
 }

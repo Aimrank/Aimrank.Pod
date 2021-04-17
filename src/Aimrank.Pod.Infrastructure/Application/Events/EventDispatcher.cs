@@ -3,52 +3,47 @@ using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using System.Text.Json;
 using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
 using System;
 
 namespace Aimrank.Pod.Infrastructure.Application.Events
 {
     internal class EventDispatcher : IEventDispatcher, IDisposable
     {
-        private readonly RabbitMQSettings _rabbitSettings;
-        private readonly IBasicProperties _basicProperties;
-        private readonly IConnection _connection;
-        private readonly IModel _channel;
+        private RabbitMQSettings RabbitMQSettings { get; }
+        private IBasicProperties BasicProperties { get; }
+        private IConnection Connection { get; }
+        private IModel Channel { get; }
 
         public EventDispatcher(IOptions<RabbitMQSettings> rabbitSettings)
         {
-            _rabbitSettings = rabbitSettings.Value;
+            RabbitMQSettings = rabbitSettings.Value;
 
             var factory = new ConnectionFactory
             {
-                HostName = _rabbitSettings.HostName,
-                Port = _rabbitSettings.Port,
-                UserName = _rabbitSettings.Username,
-                Password = _rabbitSettings.Password
+                HostName = RabbitMQSettings.HostName,
+                Port = RabbitMQSettings.Port,
+                UserName = RabbitMQSettings.Username,
+                Password = RabbitMQSettings.Password
             };
 
-            _connection = factory.CreateConnection();
-            _channel = _connection.CreateModel();
-            _channel.ExchangeDeclare(_rabbitSettings.ExchangeName, "direct", true, false, null);
+            Connection = factory.CreateConnection();
+            Channel = Connection.CreateModel();
+            Channel.ExchangeDeclare(RabbitMQSettings.ExchangeName, "direct", true, false, null);
 
-            _basicProperties = _channel.CreateBasicProperties();
-            _basicProperties.Persistent = true;
+            BasicProperties = Channel.CreateBasicProperties();
+            BasicProperties.Persistent = true;
         }
 
-        public Task DispatchAsync(IEvent @event, CancellationToken cancellationToken = default)
-        {
-            _channel.BasicPublish(_rabbitSettings.ExchangeName, GetRoutingKey(@event), _basicProperties, GetEventBody(@event));
-            return Task.CompletedTask;
-        }
+        public void Dispatch(IEvent @event)
+            => Channel.BasicPublish(RabbitMQSettings.ExchangeName, GetRoutingKey(@event), BasicProperties, GetEventBody(@event));
 
         public void Dispose()
         {
-            _channel?.Close();
-            _connection?.Dispose();
+            Channel?.Close();
+            Connection?.Dispose();
         }
 
-        private string GetRoutingKey(IEvent @event) => $"{_rabbitSettings.ServiceName}.{@event.GetType().Name}";
+        private string GetRoutingKey(IEvent @event) => $"{RabbitMQSettings.ServiceName}.{@event.GetType().Name}";
 
         private byte[] GetEventBody(IEvent @event)
         {
