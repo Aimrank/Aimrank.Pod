@@ -9,6 +9,7 @@ COPY *.sln .
 COPY src/Aimrank.Pod.Api/*.csproj ./src/Aimrank.Pod.Api/
 COPY src/Aimrank.Pod.Application/*.csproj ./src/Aimrank.Pod.Application/
 COPY src/Aimrank.Pod.Infrastructure/*.csproj ./src/Aimrank.Pod.Infrastructure/
+COPY tests/Aimrank.Pod.UnitTests/*.csproj ./tests/Aimrank.Pod.UnitTests/
 
 RUN dotnet restore
 
@@ -64,9 +65,6 @@ RUN DEBIAN_FRONTEND=noninteractive && apt-get update \
   && rm -rf /var/lib/apt/lists/*
   
 COPY --chown=steam:steam container_fs/csgo/ ${STEAM_DIR}/
-COPY --chown=steam:steam container_fs/start.sh /home/start.sh
-
-RUN chmod +x /home/start.sh
 
 # -- Step 3 -- Compile sourcemod plugins
 
