@@ -1,9 +1,8 @@
 ﻿using Aimrank.Pod.Application.Server;
+using Aimrank.Pod.Infrastructure.Network;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
-using System.Net;
 using System.Threading.Tasks;
 using System;
 
@@ -17,8 +16,11 @@ namespace Aimrank.Pod.Infrastructure.Application.Server
         
         private readonly ConcurrentDictionary<Guid, ServerProcess> _processes = new();
 
-        public ServerProcessManager()
+        private readonly PodAddressFactory _podAddressFactory;
+
+        public ServerProcessManager(PodAddressFactory podAddressFactory)
         {
+            _podAddressFactory = podAddressFactory;
             _availablePorts.Enqueue(27016);
             _availablePorts.Enqueue(27017);
             _availablePorts.Enqueue(27018);
@@ -45,7 +47,7 @@ namespace Aimrank.Pod.Infrastructure.Application.Server
                 
                 process.Start();
 
-                return $"{GetLocalIpAddress()}:{port}";
+                return _podAddressFactory.CreateAddress(port);
             }
         }
 
@@ -75,21 +77,6 @@ namespace Aimrank.Pod.Infrastructure.Application.Server
             {
                 process.Dispose();
             }
-        }
-        
-        private static string GetLocalIpAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip.ToString();
-                }
-            }
-
-            return "localhost";
         }
     }
 }

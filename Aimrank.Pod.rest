@@ -1,0 +1,53 @@
+@host = http://localhost:5001
+@matchId = 72ea447e-0fdf-4094-9408-d45a447e6d8b
+@steamId1 = 12345678901234567
+@steamId2 = 76561198062895607
+
+### Start match
+
+POST {{host}}/csgo
+Content-Type: application/json
+
+{
+  "matchId": "{{matchId}}",
+  "name": "map_start"
+}
+
+### Finish match
+
+POST {{host}}/csgo
+Content-Type: application/json
+
+{
+  "matchId": "{{matchId}}",
+  "name": "match_end",
+  "data": {
+    "winner": 2,
+    "teamTerrorists": {
+      "score": 0,
+      "clients": [
+        {
+          "steamId": "{{steamId1}}",
+          "kills": 0,
+          "assists": 0,
+          "deaths": 5,
+          "hs": 0,
+          "score": 0
+        }
+      ]
+    },
+    "teamCounterTerrorists": {
+      "score": 5,
+      "clients": [
+        {
+          "steamId": "{{steamId2}}",
+          "kills": 5,
+          "assists": 0,
+          "deaths": 0,
+          "hs": 4,
+          "score": 0
+        }
+      ]
+    }
+  }
+}

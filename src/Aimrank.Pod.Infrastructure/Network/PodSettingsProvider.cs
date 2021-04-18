@@ -2,9 +2,9 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using System;
 
-namespace Aimrank.Pod.Api
+namespace Aimrank.Pod.Infrastructure.Network
 {
-    public static class PodSettingsProvider
+    internal static class PodSettingsProvider
     {
         private static PodSettings _settings;
 

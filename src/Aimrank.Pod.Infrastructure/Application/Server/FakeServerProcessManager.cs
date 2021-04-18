@@ -1,4 +1,5 @@
 using Aimrank.Pod.Application.Server;
+using Aimrank.Pod.Infrastructure.Network;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,12 @@ namespace Aimrank.Pod.Infrastructure.Application.Server
         private readonly ConcurrentQueue<int> _availablePorts = new();
         
         private readonly ConcurrentDictionary<Guid, ServerConfiguration> _processes = new();
+
+        private readonly PodAddressFactory _podAddressFactory;
         
-        public FakeServerProcessManager()
+        public FakeServerProcessManager(PodAddressFactory podAddressFactory)
         {
+            _podAddressFactory = podAddressFactory;
             _availablePorts.Enqueue(27016);
             _availablePorts.Enqueue(27017);
             _availablePorts.Enqueue(27018);
@@ -34,8 +38,8 @@ namespace Aimrank.Pod.Infrastructure.Application.Server
                 var configuration = new ServerConfiguration(steamToken, port, whitelist.ToList(), map);
 
                 _processes.TryAdd(matchId, configuration);
-
-                return "localhost";
+                
+                return _podAddressFactory.CreateAddress(port);
             }
         }
 
