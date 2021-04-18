@@ -14,14 +14,13 @@ namespace Aimrank.Pod.Infrastructure.Network
         }
 
         public string CreateAddress(int? port = null)
-            =>  $"{GetIpAddress() ?? "localhost"}:{port ?? _podSettings.Port}";
-        
-        private string GetIpAddress() => _podSettings.HostName ?? GetLocalIpAddress();
+            => $"{GetIpAddress() ?? "localhost"}:{port ?? _podSettings.Port}";
+
+        private string GetIpAddress()
+            => string.IsNullOrEmpty(_podSettings.HostName) ? GetLocalIpAddress() : _podSettings.HostName;
 
         private static string GetLocalIpAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            return host.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork)?.ToString();
-        }
+            => Dns.GetHostEntry(Dns.GetHostName()).AddressList
+                .FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork)?.ToString();
     }
 }

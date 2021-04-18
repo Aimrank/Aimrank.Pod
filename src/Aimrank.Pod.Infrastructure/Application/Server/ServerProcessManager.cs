@@ -1,5 +1,6 @@
 ﻿using Aimrank.Pod.Application.Server;
 using Aimrank.Pod.Infrastructure.Network;
+using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,12 @@ namespace Aimrank.Pod.Infrastructure.Application.Server
 
         private readonly PodAddressFactory _podAddressFactory;
 
-        public ServerProcessManager(PodAddressFactory podAddressFactory)
+        private readonly ILogger<ServerProcessManager> _logger;
+
+        public ServerProcessManager(PodAddressFactory podAddressFactory, ILogger<ServerProcessManager> logger)
         {
             _podAddressFactory = podAddressFactory;
+            _logger = logger;
             _availablePorts.Enqueue(27016);
             _availablePorts.Enqueue(27017);
             _availablePorts.Enqueue(27018);
@@ -47,7 +51,11 @@ namespace Aimrank.Pod.Infrastructure.Application.Server
                 
                 process.Start();
 
-                return _podAddressFactory.CreateAddress(port);
+                var address = _podAddressFactory.CreateAddress(port);
+                
+                _logger.LogInformation($"Started CS:GO server at {address}");
+
+                return address;
             }
         }
 

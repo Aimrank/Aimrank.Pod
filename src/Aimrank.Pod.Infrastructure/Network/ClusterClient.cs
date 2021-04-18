@@ -12,6 +12,9 @@ namespace Aimrank.Pod.Infrastructure.Network
             using var httpClient = new HttpClient();
             
             var podAddressFactory = new PodAddressFactory(PodSettingsProvider.Settings);
+            var podAddress = podAddressFactory.CreateAddress();
+            
+            Console.WriteLine($"Connecting {podAddress} to cluster.");
 
             while (true)
             {
@@ -20,7 +23,7 @@ namespace Aimrank.Pod.Infrastructure.Network
                     var response = await httpClient.PostAsJsonAsync(
                         $"{PodSettingsProvider.Settings.ClusterAddress}/api/cluster", new
                         {
-                            IpAddress = podAddressFactory.CreateAddress(),
+                            IpAddress = podAddress,
                             PodSettingsProvider.Settings.MaxServers
                         });
 
