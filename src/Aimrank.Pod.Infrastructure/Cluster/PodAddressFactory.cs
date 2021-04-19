@@ -1,16 +1,17 @@
+using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Net.Sockets;
 using System.Net;
 
-namespace Aimrank.Pod.Infrastructure.Network
+namespace Aimrank.Pod.Infrastructure.Cluster
 {
     internal class PodAddressFactory
     {
         private readonly PodSettings _podSettings;
 
-        public PodAddressFactory(PodSettings podSettings)
+        public PodAddressFactory(IOptions<PodSettings> podSettings)
         {
-            _podSettings = podSettings;
+            _podSettings = podSettings.Value;
         }
 
         public string CreateAddress(int? port = null)

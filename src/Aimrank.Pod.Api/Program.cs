@@ -1,25 +1,21 @@
-using Aimrank.Pod.Infrastructure.Network;
+using Aimrank.Pod.Infrastructure.Cluster;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
-using System;
 
 namespace Aimrank.Pod.Api
 {
     public static class Program
     {
-        public static async Task<int> Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            if (await ClusterClient.ConnectToCluster() is false)
-            {
-                Console.WriteLine("Could not connect to Cluster");
-                
-                return 1;
-            }
-            
-            await CreateHostBuilder(args).Build().RunAsync();
+            var host = CreateHostBuilder(args).Build();
 
-            return 0;
+            var clusterClient = host.Services.GetRequiredService<IClusterClient>();
+
+            await clusterClient.ConnectAsync();
+            await host.RunAsync();
         }
 
         private static IHostBuilder CreateHostBuilder(string[] args) =>

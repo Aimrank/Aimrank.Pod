@@ -1,5 +1,5 @@
 ﻿using Aimrank.Pod.Application.Server;
-using Aimrank.Pod.Infrastructure.Network;
+using Aimrank.Pod.Infrastructure.Cluster;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
