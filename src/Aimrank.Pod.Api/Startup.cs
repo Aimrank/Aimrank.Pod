@@ -1,10 +1,10 @@
+using Aimrank.Pod.Api.Middleware;
 using Aimrank.Pod.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Aimrank.Pod.Api
 {
@@ -19,17 +19,14 @@ namespace Aimrank.Pod.Api
         
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddExceptionsHandler();
             services.AddControllers();
             services.AddInfrastructure(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
+            app.UseExceptionsHandler();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
