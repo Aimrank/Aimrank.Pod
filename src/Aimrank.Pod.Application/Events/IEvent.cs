@@ -5,6 +5,6 @@ namespace Aimrank.Pod.Application.Events
     public interface IEvent
     {
         public Guid Id { get; }
-        public DateTime OccurredAt { get; }
+        public DateTime OccurredOn { get; }
     }
 }
