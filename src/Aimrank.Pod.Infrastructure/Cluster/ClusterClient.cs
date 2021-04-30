@@ -62,7 +62,7 @@ namespace Aimrank.Pod.Infrastructure.Cluster
             try
             {
                 var response = await httpClient.PostAsJsonAsync(
-                    $"{_podSettings.ClusterAddress}/api/cluster", new
+                    $"{_podSettings.ClusterAddress}/pod", new
                     {
                         IpAddress = address,
                         _podSettings.MaxServers
