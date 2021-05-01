@@ -11,10 +11,10 @@ namespace Aimrank.Pod.Api.Middleware
             return services;
         }
         
-        public static IApplicationBuilder UseExceptionsHandler(this IApplicationBuilder app)
+        public static IApplicationBuilder UseExceptionsHandler(this IApplicationBuilder builder)
         {
-            app.UseMiddleware<ExceptionsHandlerMiddleware>();
-            return app;
+            builder.UseMiddleware<ExceptionsHandlerMiddleware>();
+            return builder;
         }
     }
 }

@@ -7,14 +7,14 @@ ENV ASPNETCORE_ENVIRONMENT=Production
 
 COPY *.sln .
 COPY src/Aimrank.Pod.Api/*.csproj ./src/Aimrank.Pod.Api/
-COPY src/Aimrank.Pod.Application/*.csproj ./src/Aimrank.Pod.Application/
+COPY src/Aimrank.Pod.Core/*.csproj ./src/Aimrank.Pod.Core/
 COPY src/Aimrank.Pod.Infrastructure/*.csproj ./src/Aimrank.Pod.Infrastructure/
 COPY tests/Aimrank.Pod.UnitTests/*.csproj ./tests/Aimrank.Pod.UnitTests/
 
 RUN dotnet restore
 
 COPY src/Aimrank.Pod.Api/. ./src/Aimrank.Pod.Api/
-COPY src/Aimrank.Pod.Application/. ./src/Aimrank.Pod.Application/
+COPY src/Aimrank.Pod.Core/. ./src/Aimrank.Pod.Core/
 COPY src/Aimrank.Pod.Infrastructure/. ./src/Aimrank.Pod.Infrastructure/
 
 RUN dotnet publish -c Release -o /app/out

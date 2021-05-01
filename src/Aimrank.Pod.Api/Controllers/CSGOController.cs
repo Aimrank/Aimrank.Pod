@@ -1,5 +1,5 @@
 using Aimrank.Pod.Api.Contracts;
-using Aimrank.Pod.Application.Server;
+using Aimrank.Pod.Core.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

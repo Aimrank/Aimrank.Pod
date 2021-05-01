@@ -11,9 +11,7 @@ namespace Aimrank.Pod.Api
         public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-
             var clusterClient = host.Services.GetRequiredService<IClusterClient>();
-
             await clusterClient.ConnectAsync();
             await host.RunAsync();
         }

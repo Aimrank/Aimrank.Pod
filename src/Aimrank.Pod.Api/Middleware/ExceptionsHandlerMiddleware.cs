@@ -1,4 +1,4 @@
-using Aimrank.Pod.Infrastructure.Application.Server;
+using Aimrank.Pod.Infrastructure.CSGO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -29,7 +29,8 @@ namespace Aimrank.Pod.Api.Middleware
                 {
                     _logger.LogError(exception, exception.Message);
                 }
-                
+
+                context.Response.StatusCode = response.Status ?? 500;
                 await context.Response.WriteAsJsonAsync(response);
             }
         }
