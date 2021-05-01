@@ -1,9 +1,9 @@
-using Aimrank.Pod.Application.Server.StartServer;
-using Aimrank.Pod.Application.Server.StopServer;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
+using Aimrank.Pod.Core.Commands.StartServer;
+using Aimrank.Pod.Core.Commands.StopServer;
 
 namespace Aimrank.Pod.Api.Controllers
 {

@@ -19,9 +19,9 @@ namespace Aimrank.Pod.Api
         
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddInfrastructure(Configuration);
             services.AddExceptionsHandler();
             services.AddControllers();
-            services.AddInfrastructure(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

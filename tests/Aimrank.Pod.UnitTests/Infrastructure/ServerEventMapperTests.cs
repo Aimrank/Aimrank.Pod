@@ -1,7 +1,7 @@
-using Aimrank.Pod.Application.Server.FinishMatch;
-using Aimrank.Pod.Application.Server.StartMatch;
-using Aimrank.Pod.Application.Server;
-using Aimrank.Pod.Infrastructure.Application.Server;
+using Aimrank.Pod.Core.Commands.FinishMatch;
+using Aimrank.Pod.Core.Commands.StartMatch;
+using Aimrank.Pod.Core.Services;
+using Aimrank.Pod.Infrastructure.CSGO;
 using System.Text.Json;
 using System;
 using Xunit;
