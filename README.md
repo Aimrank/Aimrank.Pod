@@ -1,6 +1,6 @@
 # Aimrank.Pod
 
-![Docker build status](https://github.com/Aimrank/Aimrank.Pod/workflows/Build/badge.svg)
+![Docker build status](https://github.com/Aimrank/Aimrank.Pod/workflows/Master%20build/badge.svg)
 
 Service responsible for managing lifetime of CS:GO servers.
 Cluster application calls this service when match has to be started.
