@@ -3,21 +3,17 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 WORKDIR /app
 
-ENV ASPNETCORE_ENVIRONMENT=Production
-
-COPY *.sln .
 COPY src/Aimrank.Pod.Api/*.csproj ./src/Aimrank.Pod.Api/
 COPY src/Aimrank.Pod.Core/*.csproj ./src/Aimrank.Pod.Core/
 COPY src/Aimrank.Pod.Infrastructure/*.csproj ./src/Aimrank.Pod.Infrastructure/
-COPY tests/Aimrank.Pod.UnitTests/*.csproj ./tests/Aimrank.Pod.UnitTests/
 
-RUN dotnet restore
+RUN dotnet restore src/Aimrank.Pod.Api
 
 COPY src/Aimrank.Pod.Api/. ./src/Aimrank.Pod.Api/
 COPY src/Aimrank.Pod.Core/. ./src/Aimrank.Pod.Core/
 COPY src/Aimrank.Pod.Infrastructure/. ./src/Aimrank.Pod.Infrastructure/
 
-RUN dotnet publish -c Release -o /app/out
+RUN dotnet publish src/Aimrank.Pod.Api -c Release -o /app/out
 
 # -- Step 2 -- Create image with web API and CS:GO server
 
@@ -85,5 +81,7 @@ EXPOSE 27016-27019/tcp
 
 HEALTHCHECK --interval=30s --timeout=30s --start-period=30s --retries=5 \
   CMD curl -f http://localhost/ || exit 1
+  
+ENV ASPNETCORE_ENVIRONMENT=Production
   
 ENTRYPOINT ["dotnet", "Aimrank.Pod.Api.dll"]
