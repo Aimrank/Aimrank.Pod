@@ -76,8 +76,8 @@ VOLUME ${CSGO_DIR}
 
 WORKDIR /home/app
 
-EXPOSE 27016-27019/udp
-EXPOSE 27016-27019/tcp
+EXPOSE 30001-30004/udp
+EXPOSE 30001-30004/tcp
 
 HEALTHCHECK --interval=30s --timeout=30s --start-period=30s --retries=5 \
   CMD curl -f http://localhost/ || exit 1

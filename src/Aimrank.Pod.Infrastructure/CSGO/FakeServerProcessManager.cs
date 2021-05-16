@@ -26,10 +26,10 @@ namespace Aimrank.Pod.Infrastructure.CSGO
         {
             _podAddressFactory = podAddressFactory;
             _logger = logger;
-            _availablePorts.Enqueue(27016);
-            _availablePorts.Enqueue(27017);
-            _availablePorts.Enqueue(27018);
-            _availablePorts.Enqueue(27019);
+            _availablePorts.Enqueue(30001);
+            _availablePorts.Enqueue(30002);
+            _availablePorts.Enqueue(30003);
+            _availablePorts.Enqueue(30004);
         }
         
         public string StartServer(Guid matchId, string steamToken, string map, IEnumerable<string> whitelist)
